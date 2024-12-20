@@ -160,3 +160,17 @@ asyncio.run(main())
 df = pd.read_csv("post_comments.csv")
 df
 ```
+# ascending and descending
+```
+filtered_data1.sort_values('Score', ascending=False)
+filtered_data1.sort_values('Score', ascending=True)
+filtered_data1[filtered_data1.duplicated(keep=False)]
+```
+```
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
+stop_words = set(stopwords.words('english'))
+```
+text1 = filtered_data1['Body']
+```
