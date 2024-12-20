@@ -104,3 +104,60 @@ async def main():
 
 asyncio.run(main())
 ```
+```
+post_data = {
+    "Title": submission.title,
+    "Author": submission.author.name if submission.author else "N/A",
+    "Score": submission.score,
+    "Comments": submission.num_comments,
+    "Body": submission.selftext
+}
+```
+```
+async def get_post_details(post_url):
+    # Initialize asyncpraw Reddit instance
+    async with asyncpraw.Reddit(
+        client_id="LCe8jnL_D8Z5ZKKbwjt__Q",
+        client_secret="V8D21qPDX2WYYlKI94z2SAoZzywAYQ",
+        user_agent="MyRedditApp/1.0 by u/OkNothing5723",
+    ) as reddit:  # Use async with to ensure proper cleanup
+        try:
+            submission = await reddit.submission(url=post_url)  # Await the submission
+            post_data = {
+                "Title": submission.title,
+                "Author": submission.author.name if submission.author else "N/A",
+                "Score": submission.score,
+                "Comments": submission.num_comments,
+                "Body": submission.selftext
+            }
+            print("Post Details:")
+            print(post_data)
+            return post_data  # Return the submission data
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
+        finally:
+            await reddit.close()
+            ```
+``` python
+import pandas as pd
+
+async def main():
+    post_url = "https://www.reddit.com/r/MiddleClassFinance/comments/1cc3r5j/if_interest_rates_go_down_do_housing_prices_go_up/"
+    post_details = await get_post_details(post_url)
+    if post_details:
+        # Convert to DataFrame
+        df = pd.DataFrame([post_details])
+        # Save to CSV
+        df.to_csv("reddit_post_details.csv", index=False)
+        print("Post details saved to CSV.")
+    else:
+        print("Could not retrieve post details.")
+asyncio.run(main())
+```
+```
+df = pd.read_csv("reddit_post_details.csv")
+print(df.head())
+```
+
+
