@@ -56,3 +56,51 @@ This research is significant because it bridges the gap between public discourse
 
 
 # post 1 analysis
+```python 
+import asyncpraw
+import asyncio
+```
+
+# Configure Reddit API
+```async def get_post_details(post_url):
+    reddit = asyncpraw.Reddit(
+        client_id="LCe8jnL_D8Z5ZKKbwjt__Q",
+        client_secret="V8D21qPDX2WYYlKI94z2SAoZzywAYQ",
+        user_agent="MyRedditApp/1.0 by u/OkNothing5723",
+    )
+```
+
+    try:
+        submission = await reddit.submission(url=post_url)  # Await for asyncpraw submission
+        post_data = {
+            "Title": submission.title,
+            "Author": submission.author.name if submission.author else "N/A",
+            "Score": submission.score,
+            "Comments_Count": submission.num_comments,
+            "URL": submission.url,
+            "Body": submission.selftext,
+        }
+        print("Post Details:")
+        print(post_data)
+        return post_data
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+# Set the post URL
+```python
+post_url = "https://www.reddit.com/r/MiddleClassFinance/comments/1cc3r5j/if_interest_rates_go_down_do_housing_prices_go_up/"
+```
+
+# Run the asynchronous function
+```
+import asyncio
+async def main():
+    post_details = await get_post_details(post_url)
+    if post_details:
+        print("Processing post details...")
+    else:
+        print("Could not retrieve post details.")
+
+asyncio.run(main())
+```
