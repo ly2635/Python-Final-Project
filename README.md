@@ -138,7 +138,8 @@ async def get_post_details(post_url):
             return None
         finally:
             await reddit.close()
-            ```
+```
+
 ``` python
 import pandas as pd
 
@@ -156,8 +157,6 @@ async def main():
 asyncio.run(main())
 ```
 ```
-df = pd.read_csv("reddit_post_details.csv")
-print(df.head())
+df = pd.read_csv("post_comments.csv")
+df
 ```
-
-
